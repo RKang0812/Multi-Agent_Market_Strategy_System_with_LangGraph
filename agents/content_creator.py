@@ -1,8 +1,6 @@
 """
 Content Creator Agent
-内容创作 Agent
-Creates campaign ideas and marketing copies
-创建活动创意和营销文案
+
 """
 
 import os
@@ -18,16 +16,14 @@ logger = logging.getLogger(__name__)
 class ContentCreatorAgent:
     """
     Content creator agent for generating marketing content
-    用于生成营销内容的内容创作 Agent
     """
     
     def __init__(self, model_name: str = "gpt-4o"):
         """
         Initialize content creator agent
-        初始化内容创作 Agent
         
         Args:
-            model_name: OpenAI model name / OpenAI 模型名称
+            model_name: OpenAI model name
         """
         self.llm = ChatOpenAI(
             model=model_name,
@@ -39,33 +35,26 @@ class ContentCreatorAgent:
             ("system", """You are a Creative Content Creator expert in crafting compelling marketing campaigns.
 Your goal is to create innovative campaign ideas and persuasive marketing copies.
 
-你是创意内容创作者，擅长制作引人注目的营销活动。
-你的目标是创建创新的活动创意和有说服力的营销文案。
-
 Based on the marketing strategy, create:
-基于营销策略，创建：
 
 1. Campaign Ideas (5): Innovative, engaging concepts aligned with strategy
-   活动创意（5个）：创新、引人入胜的概念，与策略一致
 2. Marketing Copies (5): Compelling copy for each campaign idea
-   营销文案（5个）：每个活动创意的引人注目文案
 
 Each campaign should:
 每个活动应该：
-- Be innovative and memorable / 创新且令人难忘
-- Target the right audience / 针对正确的受众
-- Use appropriate channels / 使用合适的渠道
-- Align with overall strategy / 与整体策略一致
+- Be innovative and memorable
+- Target the right audience
+- Use appropriate channels
+- Align with overall strategy
 
 Each copy should:
-每个文案应该：
-- Have an attention-grabbing title / 有吸引注意力的标题
-- Include persuasive body text / 包含有说服力的正文
-- Be clear and actionable / 清晰且可操作
-- Match the campaign idea / 匹配活动创意
+
+- Have an attention-grabbing title
+- Include persuasive body text
+- Be clear and actionable
+- Match the campaign idea
 
 Return your content in valid JSON format:
-以有效的 JSON 格式返回你的内容：
 
 {{
   "campaign_ideas": [
@@ -89,12 +78,7 @@ Return your content in valid JSON format:
 IMPORTANT: 
 - Create exactly 5 campaign ideas and 5 corresponding copies
 - Copies should match campaign ideas in order
-- Return ONLY valid JSON, no markdown formatting
-
-重要：
-- 创建恰好 5 个活动创意和 5 个对应文案
-- 文案应按顺序匹配活动创意
-- 只返回有效的 JSON，不要使用 markdown 格式"""),
+- Return ONLY valid JSON, no markdown formatting"""),
             ("user", """Project Description: {project_description}
 
 Marketing Strategy:
@@ -109,26 +93,25 @@ Please create 5 innovative campaign ideas and compelling marketing copies.""")
     def create(self, state: dict) -> dict:
         """
         Create marketing content
-        创建营销内容
         
         Args:
-            state: Current graph state / 当前图状态
+            state: Current graph state
             
         Returns:
-            Updated state with campaign content / 包含活动内容的更新状态
+            Updated state with campaign content
         """
         try:
             logger.info("Starting content creation...")
             
-            # Format marketing strategy / 格式化营销策略
+            # Format marketing strategy
             marketing_strategy = state.get("marketing_strategy")
             strategy_text = self._format_strategy(marketing_strategy)
             
-            # Format target audience / 格式化目标受众
+            # Format target audience 
             market_research = state.get("market_research")
             audience_text = self._format_audience(market_research)
             
-            # Generate content / 生成内容
+            # Generate content
             chain = self.prompt | self.llm
             response = chain.invoke({
                 "project_description": state.get("project_description", ""),
@@ -136,10 +119,10 @@ Please create 5 innovative campaign ideas and compelling marketing copies.""")
                 "target_audience": audience_text
             })
             
-            # Parse JSON response / 解析 JSON 响应
+            # Parse JSON response
             result_text = response.content.strip()
             
-            # Remove markdown code blocks if present / 移除可能存在的 markdown 代码块
+            # Remove markdown code blocks if present
             if result_text.startswith("```json"):
                 result_text = result_text[7:]
             if result_text.startswith("```"):
@@ -150,7 +133,7 @@ Please create 5 innovative campaign ideas and compelling marketing copies.""")
             
             result_dict = json.loads(result_text)
             
-            # Create CampaignContent object / 创建 CampaignContent 对象
+            # Create CampaignContent object
             campaign_ideas = [CampaignIdea(**idea) for idea in result_dict["campaign_ideas"]]
             copies = [Copy(**copy) for copy in result_dict["copies"]]
             
@@ -178,7 +161,6 @@ Please create 5 innovative campaign ideas and compelling marketing copies.""")
     def _format_strategy(self, marketing_strategy) -> str:
         """
         Format marketing strategy for prompt
-        格式化营销策略用于提示词
         """
         if not marketing_strategy:
             return "No marketing strategy available"
@@ -203,7 +185,6 @@ KPIs:
     def _format_audience(self, market_research) -> str:
         """
         Format target audience for prompt
-        格式化目标受众用于提示词
         """
         if not market_research:
             return "No audience information available"
@@ -218,9 +199,9 @@ Behavior: {audience.get('behavior', 'N/A')}
         return formatted
     
     def _format_list(self, items: list) -> str:
-        """Format list items / 格式化列表项"""
+        """Format list items"""
         return '\n'.join([f"- {item}" for item in items])
 
 
-# Create global instance / 创建全局实例
+# Create global instance
 content_creator = ContentCreatorAgent()
