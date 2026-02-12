@@ -1,6 +1,5 @@
 """
 Models package
-数据模型包
 """
 
 from .schemas import (
