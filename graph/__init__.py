@@ -1,6 +1,5 @@
 """
 Graph package
-图包
 """
 
 from .state import GraphState
