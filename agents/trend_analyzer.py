@@ -1,8 +1,5 @@
 """
 Trend Analyzer Agent
-趋势分析 Agent
-Analyzes market, technology, and consumer trends
-分析市场、技术和消费趋势
 """
 
 import os
@@ -19,16 +16,14 @@ logger = logging.getLogger(__name__)
 class TrendAnalyzerAgent:
     """
     Trend analyzer agent for identifying market trends and opportunities
-    用于识别市场趋势和机会的趋势分析 Agent
     """
     
     def __init__(self, model_name: str = "gpt-4o-mini"):
         """
         Initialize trend analyzer agent
-        初始化趋势分析 Agent
         
         Args:
-            model_name: OpenAI model name / OpenAI 模型名称
+            model_name: OpenAI model name
         """
         self.llm = ChatOpenAI(
             model=model_name,
@@ -39,26 +34,15 @@ class TrendAnalyzerAgent:
         self.prompt = ChatPromptTemplate.from_messages([
             ("system", """You are a Trend Analysis Expert specializing in market intelligence and future forecasting.
 Your goal is to identify current trends, predict future developments, and spot opportunities.
-
-你是趋势分析专家，擅长市场情报和未来预测。
-你的目标是识别当前趋势、预测未来发展并发现机会。
-
 Based on the market research and search results, analyze:
-基于市场研究和搜索结果，分析：
 
 1. Market Trends: Industry growth, market dynamics, emerging segments
-   市场趋势：行业增长、市场动态、新兴细分市场
 2. Technology Trends: Emerging technologies, digital transformation, innovation
-   技术趋势：新兴技术、数字化转型、创新
 3. Consumer Trends: Behavior changes, preference shifts, new demands
-   消费趋势：行为变化、偏好转变、新需求
 4. Trend Impact: How trends affect the customer's business
-   趋势影响：趋势如何影响客户业务
 5. Opportunities: Market gaps, growth areas based on trends
-   机会点：基于趋势的市场空白、增长领域
 
 Return your analysis in valid JSON format:
-以有效的 JSON 格式返回你的分析：
 
 {{
   "market_trends": [
@@ -84,8 +68,7 @@ Return your analysis in valid JSON format:
   ]
 }}
 
-IMPORTANT: Return ONLY valid JSON, no markdown formatting or additional text.
-重要：只返回有效的 JSON，不要使用 markdown 格式或额外文本。"""),
+IMPORTANT: Return ONLY valid JSON, no markdown formatting or additional text."""),
             ("user", """Industry: {industry}
 Company Domain: {company_domain}
 
@@ -101,29 +84,28 @@ Please provide comprehensive trend analysis and identify opportunities.""")
     def analyze(self, state: dict) -> dict:
         """
         Analyze market trends
-        分析市场趋势
         
         Args:
-            state: Current graph state / 当前图状态
+            state: Current graph state
             
         Returns:
-            Updated state with trend analysis / 包含趋势分析的更新状态
+            Updated state with trend analysis
         """
         try:
             logger.info("Starting trend analysis...")
             
-            # Search for market trends / 搜索市场趋势
+            # Search for market trends
             industry = state.get("industry", "")
             trend_results = web_search_tool.search_market_trends(industry)
             
-            # Format market research / 格式化市场研究
+            # Format market research
             market_research = state.get("market_research")
             market_research_text = self._format_market_research(market_research)
             
-            # Format trend search results / 格式化趋势搜索结果
+            # Format trend search results
             trend_results_text = self._format_trend_results(trend_results)
             
-            # Generate analysis / 生成分析
+            # Generate analysis
             chain = self.prompt | self.llm
             response = chain.invoke({
                 "industry": state.get("industry", ""),
@@ -132,10 +114,10 @@ Please provide comprehensive trend analysis and identify opportunities.""")
                 "trend_results": trend_results_text
             })
             
-            # Parse JSON response / 解析 JSON 响应
+            # Parse JSON response
             result_text = response.content.strip()
             
-            # Remove markdown code blocks if present / 移除可能存在的 markdown 代码块
+            # Remove markdown code blocks if present
             if result_text.startswith("```json"):
                 result_text = result_text[7:]
             if result_text.startswith("```"):
@@ -146,7 +128,7 @@ Please provide comprehensive trend analysis and identify opportunities.""")
             
             result_dict = json.loads(result_text)
             
-            # Create TrendAnalysis object / 创建 TrendAnalysis 对象
+            # Create TrendAnalysis object
             trend_analysis = TrendAnalysis(**result_dict)
             
             logger.info("Trend analysis completed successfully")
@@ -168,7 +150,6 @@ Please provide comprehensive trend analysis and identify opportunities.""")
     def _format_market_research(self, market_research) -> str:
         """
         Format market research for prompt
-        格式化市场研究用于提示词
         """
         if not market_research:
             return "No market research available"
@@ -193,7 +174,6 @@ Top Competitors:
     def _format_trend_results(self, trend_results: list) -> str:
         """
         Format trend search results for prompt
-        格式化趋势搜索结果用于提示词
         """
         formatted = ""
         for i, result in enumerate(trend_results[:5], 1):
@@ -202,5 +182,5 @@ Top Competitors:
         return formatted
 
 
-# Create global instance / 创建全局实例
+# Create global instance
 trend_analyzer = TrendAnalyzerAgent()
