@@ -1,6 +1,5 @@
 """
 Agents package
-Agent 包
 """
 
 from .market_researcher import MarketResearcherAgent, market_researcher
