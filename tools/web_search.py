@@ -1,6 +1,5 @@
 """
 Web search tool using OpenAI or search APIs
-使用 OpenAI 或搜索 API 的网络搜索工具
 """
 
 import os
@@ -14,38 +13,34 @@ logger = logging.getLogger(__name__)
 class WebSearchTool:
     """
     Web search tool for gathering market information
-    用于收集市场信息的网络搜索工具
     """
     
     def __init__(self):
-        """Initialize search tool / 初始化搜索工具"""
+        """Initialize search tool"""
         self.serper_api_key = os.getenv("SERPER_API_KEY")
         self.use_serper = self.serper_api_key is not None
         
     def search(self, query: str, num_results: int = 5) -> List[Dict[str, str]]:
         """
         Search the web for information
-        在网络上搜索信息
         
         Args:
-            query: Search query / 搜索查询
-            num_results: Number of results to return / 返回结果数量
+            query: Search query
+            num_results: Number of results to return
             
         Returns:
-            List of search results / 搜索结果列表
+            List of search results
         """
         if self.use_serper:
             return self._search_with_serper(query, num_results)
         else:
             # Fallback to simulated search if no API key
-            # 如果没有 API 密钥，使用模拟搜索
             logger.warning("No SERPER_API_KEY found, using simulated search")
             return self._simulated_search(query, num_results)
     
     def _search_with_serper(self, query: str, num_results: int) -> List[Dict[str, str]]:
         """
         Search using Serper API
-        使用 Serper API 搜索
         """
         url = "https://google.serper.dev/search"
         headers = {
@@ -79,10 +74,8 @@ class WebSearchTool:
     def _simulated_search(self, query: str, num_results: int) -> List[Dict[str, str]]:
         """
         Simulated search for demo purposes
-        用于演示的模拟搜索
         """
         # Return simulated results based on query keywords
-        # 根据查询关键词返回模拟结果
         results = [
             {
                 "title": f"Search result for: {query}",
@@ -95,7 +88,6 @@ class WebSearchTool:
     def search_competitors(self, company_domain: str, industry: str) -> List[Dict[str, str]]:
         """
         Search for competitors in the industry
-        搜索行业竞争对手
         """
         query = f"{industry} companies competitors of {company_domain}"
         return self.search(query, num_results=5)
@@ -103,7 +95,6 @@ class WebSearchTool:
     def search_market_trends(self, industry: str) -> List[Dict[str, str]]:
         """
         Search for market trends
-        搜索市场趋势
         """
         query = f"{industry} market trends 2024 2025"
         return self.search(query, num_results=5)
@@ -111,11 +102,10 @@ class WebSearchTool:
     def search_target_audience(self, industry: str, product: str) -> List[Dict[str, str]]:
         """
         Search for target audience information
-        搜索目标受众信息
         """
         query = f"{industry} {product} target audience demographics"
         return self.search(query, num_results=5)
 
 
-# Create global instance / 创建全局实例
+# Create global instance
 web_search_tool = WebSearchTool()
