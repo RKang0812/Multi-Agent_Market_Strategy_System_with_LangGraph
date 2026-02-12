@@ -1,88 +1,87 @@
 """
 Data models for marketing strategy system
-营销策略系统的数据模型
 """
 
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict
 
 
-# ============ Input Models / 输入模型 ============
+# ============ Input Models ============
 
 class MarketingInput(BaseModel):
-    """User input for marketing analysis / 用户输入的营销分析参数"""
-    company_domain: str = Field(..., description="Company domain or name / 公司域名或名称")
-    industry: str = Field(..., description="Industry sector / 所属行业")
-    project_description: str = Field(..., description="Project description / 项目描述")
-    target_market: Optional[str] = Field(None, description="Target market (optional) / 目标市场（可选）")
+    """User input for marketing analysis"""
+    company_domain: str = Field(..., description="Company domain or name ")
+    industry: str = Field(..., description="Industry sector")
+    project_description: str = Field(..., description="Project description")
+    target_market: Optional[str] = Field(None, description="Target market (optional)")
 
 
-# ============ Output Models / 输出模型 ============
+# ============ Output Models ============
 
 class MarketResearch(BaseModel):
-    """Market research results / 市场研究结果"""
-    customer_profile: Dict[str, str] = Field(..., description="Customer profile / 客户概况")
-    competitors: List[Dict[str, str]] = Field(..., description="List of competitors / 竞争对手列表")
-    target_audience: Dict[str, str] = Field(..., description="Target audience profile / 目标受众画像")
-    market_positioning: str = Field(..., description="Market positioning / 市场定位")
+    """Market research results"""
+    customer_profile: Dict[str, str] = Field(..., description="Customer profile")
+    competitors: List[Dict[str, str]] = Field(..., description="List of competitors")
+    target_audience: Dict[str, str] = Field(..., description="Target audience profile")
+    market_positioning: str = Field(..., description="Market positioning")
 
 
 class TrendAnalysis(BaseModel):
-    """Trend analysis results / 趋势分析结果"""
-    market_trends: List[str] = Field(..., description="Market trends / 市场趋势")
-    tech_trends: List[str] = Field(..., description="Technology trends / 技术趋势")
-    consumer_trends: List[str] = Field(..., description="Consumer behavior trends / 消费趋势")
-    trend_impact: str = Field(..., description="Impact assessment / 趋势影响评估")
-    opportunities: List[str] = Field(..., description="Identified opportunities / 识别的机会点")
+    """Trend analysis results"""
+    market_trends: List[str] = Field(..., description="Market trends")
+    tech_trends: List[str] = Field(..., description="Technology trends")
+    consumer_trends: List[str] = Field(..., description="Consumer behavior trends")
+    trend_impact: str = Field(..., description="Impact assessment")
+    opportunities: List[str] = Field(..., description="Identified opportunities")
 
 
 class MarketingStrategy(BaseModel):
-    """Marketing strategy / 营销策略"""
-    name: str = Field(..., description="Strategy name / 策略名称")
-    goals: List[str] = Field(..., description="Marketing goals / 营销目标")
-    tactics: List[str] = Field(..., description="Tactics / 战术手段")
-    channels: List[str] = Field(..., description="Marketing channels / 营销渠道")
-    KPIs: List[str] = Field(..., description="Key performance indicators / 关键绩效指标")
+    """Marketing strategy"""
+    name: str = Field(..., description="Strategy name")
+    goals: List[str] = Field(..., description="Marketing goals")
+    tactics: List[str] = Field(..., description="Tactics")
+    channels: List[str] = Field(..., description="Marketing channels")
+    KPIs: List[str] = Field(..., description="Key performance indicators")
 
 
 class CampaignIdea(BaseModel):
-    """Campaign idea / 活动创意"""
-    name: str = Field(..., description="Campaign name / 活动名称")
-    description: str = Field(..., description="Campaign description / 活动描述")
-    audience: str = Field(..., description="Target audience / 目标受众")
-    channel: str = Field(..., description="Marketing channel / 营销渠道")
+    """Campaign idea"""
+    name: str = Field(..., description="Campaign name")
+    description: str = Field(..., description="Campaign description")
+    audience: str = Field(..., description="Target audience")
+    channel: str = Field(..., description="Marketing channel")
 
 
 class Copy(BaseModel):
-    """Marketing copy / 营销文案"""
-    title: str = Field(..., description="Copy title / 文案标题")
-    body: str = Field(..., description="Copy body / 文案正文")
+    """Marketing copy"""
+    title: str = Field(..., description="Copy title")
+    body: str = Field(..., description="Copy body")
 
 
 class CampaignContent(BaseModel):
-    """Campaign content / 活动内容"""
-    campaign_ideas: List[CampaignIdea] = Field(..., description="List of campaign ideas / 活动创意列表")
-    copies: List[Copy] = Field(..., description="Marketing copies / 营销文案列表")
+    """Campaign content"""
+    campaign_ideas: List[CampaignIdea] = Field(..., description="List of campaign ideas")
+    copies: List[Copy] = Field(..., description="Marketing copies")
 
 
-# ============ Graph State / 图状态 ============
+# ============ Graph State ============
 
 class GraphState(BaseModel):
-    """State for LangGraph workflow / LangGraph 工作流状态"""
+    """State for LangGraph workflow / LangGraph"""
     
-    # Input / 输入
+    # Input
     company_domain: str
     industry: str
     project_description: str
     target_market: Optional[str] = None
     
-    # Intermediate results / 中间结果
+    # Intermediate results
     market_research: Optional[MarketResearch] = None
     trend_analysis: Optional[TrendAnalysis] = None
     marketing_strategy: Optional[MarketingStrategy] = None
     campaign_content: Optional[CampaignContent] = None
     
-    # Metadata / 元数据
+    # Metadata
     current_step: str = "initialized"
     error: Optional[str] = None
     
