@@ -1,6 +1,5 @@
 """
 Tools package
-工具包
 """
 
 from .web_search import WebSearchTool, web_search_tool
