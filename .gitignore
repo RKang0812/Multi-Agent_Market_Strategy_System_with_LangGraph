@@ -1,0 +1,53 @@
+# Python / Python 相关
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment / 虚拟环境
+venv/
+env/
+ENV/
+.venv
+
+# Environment Variables / 环境变量
+.env
+.env.local
+
+# IDE / 集成开发环境
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS / 操作系统
+.DS_Store
+Thumbs.db
+
+# Logs / 日志
+*.log
+logs/
+
+# Output files / 输出文件
+outputs/*
+!outputs/.gitkeep
+
+# Streamlit / Streamlit 相关
+.streamlit/

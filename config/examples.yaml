@@ -1,0 +1,59 @@
+# Example data for demo and testing
+# 用于演示和测试的示例数据
+
+examples:
+  - name: "SaaS Platform - AI Automation"
+    company_domain: "crewai.com"
+    industry: "AI & Automation"
+    project_description: |
+      CrewAI, a leading provider of multi-agent systems, aims to revolutionize marketing 
+      automation for its enterprise clients. This project involves developing an innovative 
+      marketing strategy to showcase CrewAI's advanced AI-driven solutions, emphasizing 
+      ease of use, scalability, and integration capabilities. The campaign will target 
+      tech-savvy decision-makers in medium to large enterprises, highlighting success 
+      stories and the transformative potential of CrewAI's platform.
+    target_market: "Medium to large enterprises (100-10000 employees) in North America and Europe"
+
+  - name: "E-commerce Fashion - Sustainable Brand"
+    company_domain: "sustainablestyle.com"
+    industry: "Fashion & Retail"
+    project_description: |
+      SustainableStyle is an e-commerce fashion brand focusing on eco-friendly and 
+      ethically sourced clothing. The company wants to expand its market presence among 
+      environmentally conscious millennials and Gen Z consumers. This project aims to 
+      create a comprehensive marketing strategy that emphasizes sustainability, style, 
+      and social responsibility while driving online sales and brand loyalty.
+    target_market: "Millennials and Gen Z (25-40 years old) who value sustainability"
+
+  - name: "B2B Consulting - Digital Transformation"
+    company_domain: "digitaltransform.co"
+    industry: "Business Consulting"
+    project_description: |
+      DigitalTransform is a consulting firm specializing in helping traditional businesses 
+      modernize their operations through digital transformation. The firm needs a marketing 
+      strategy to establish thought leadership, generate qualified leads, and demonstrate 
+      ROI to potential clients in manufacturing, retail, and financial services sectors. 
+      Focus on content marketing and case studies.
+    target_market: "Traditional industries (manufacturing, retail, finance) seeking digital transformation"
+
+  - name: "FinTech Startup - Neobank"
+    company_domain: "neobank.io"
+    industry: "Financial Technology"
+    project_description: |
+      NeoBank is a mobile-first digital banking platform targeting underbanked populations 
+      in emerging markets. The startup needs a marketing strategy to build trust, educate 
+      potential users about digital banking benefits, and drive app downloads. The strategy 
+      should address financial literacy, security concerns, and highlight convenience and 
+      cost savings compared to traditional banks.
+    target_market: "Emerging markets in Southeast Asia and Latin America, focusing on young professionals"
+
+  - name: "HealthTech App - Mental Wellness"
+    company_domain: "mindfulhealth.app"
+    industry: "Health & Wellness"
+    project_description: |
+      MindfulHealth is a mental health application using AI-powered therapy and meditation 
+      tools. The company wants to expand user acquisition while building trust in AI-assisted 
+      mental health care. This project involves creating a sensitive, evidence-based marketing 
+      strategy that addresses stigma, highlights clinical validation, and demonstrates value 
+      for both individuals and corporate wellness programs.
+    target_market: "Urban professionals (25-45 years old) and corporate HR departments"
