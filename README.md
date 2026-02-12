@@ -4,6 +4,8 @@ A lightweight engineering project demonstrating how to design and orchestrate a 
 
 This project focuses on system architecture, agent collaboration, and reproducible workflows rather than marketing presentation.
 
+[▶ Watch the Demo](demo.mp4)
+
 ## Project Overview
 
 This application builds a multi-step workflow that generates a complete marketing strategy report from structured user input.
