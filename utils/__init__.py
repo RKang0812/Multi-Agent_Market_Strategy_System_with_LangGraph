@@ -1,6 +1,5 @@
 """
 Utilities package
-工具包
 """
 
 from .logger import setup_logger
